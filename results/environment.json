@@ -1,0 +1,9 @@
+{
+  "python": "3.13.18 (main, Oct 26 2026, 15:28:15) [GCC 13.3.0]",
+  "torch": "2.14.1+cpu",
+  "sklearn": "1.6.1",
+  "numpy": "2.4.6",
+  "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+  "seed": 14928,
+  "device": "cpu"
+}
