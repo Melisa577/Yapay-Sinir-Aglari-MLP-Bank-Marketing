@@ -1,4 +1,4 @@
-# Yeniden Çalıştırma Kaydı (19 Kasım 2026)
+# Yeniden Çalıştırma Kaydı (Kasım 2026)
 
 Bu klasör, Bank Marketing veri kümesi üzerinde gerçekleştirilen MLP deneyinin yeniden çalıştırılmasına ait kayıtları içerir. Önceki deneyin dosyaları ve GitHub geçmişi korunmuştur. Bu yeniden çalıştırma, önceki test sonuçlarının zaten görülmüş olduğu gerçeğini değiştirmez; bu nedenle tamamen kör bir ilk test değerlendirmesi olarak sunulmaz.
 
