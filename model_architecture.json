@@ -1,0 +1,8 @@
+{
+  "hidden": [
+    64,
+    32
+  ],
+  "input_features": 61,
+  "learnable_parameters": 6081
+}
