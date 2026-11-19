@@ -1,8 +1,8 @@
-numpy
+numpy==2.4.6
 pandas
 matplotlib
 seaborn
-scikit-learn
+scikit-learn==1.6.1
 scipy
-torch
+torch==2.14.1
 joblib
