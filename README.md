@@ -1,32 +1,88 @@
 # Yapay Sinir Ağları — MLP ile Bank Marketing Sınıflandırması
 
-Yüksek lisans ara sınav projesi. Öğrenci numarası son 5 hane: **12902**, temel seed: **14928**.
+Bu proje, Yapay Sinir Ağları dersi kapsamında yüksek lisans ara sınav çalışması olarak hazırlanmıştır. Çalışmada, bankacılık pazarlama verileri kullanılarak müşterilerin vadeli mevduat aboneliği yapma olasılıkları Çok Katmanlı Algılayıcı (MLP) modeli ile tahmin edilmiştir.
 
-## Dataset
-UCI Bank Marketing, **bank-additional.csv** (4,119 observations). `duration` excluded. Source: https://archive.ics.uci.edu/dataset/222/bank+marketing (DOI: 10.24432/C5K306).
+**Öğrenci Numarasının Son 5 Hanesi:** 12902  
+**Temel Rastgelelik Tohumu (Seed):** 14928
 
-## Execution
-Recommended: open `MLP_Midterm_14928_Colab.ipynb` in Google Colab and run sequentially. `01_eda.ipynb`, `02_nested_cv.ipynb`, `03_final_test.ipynb` are sequential excerpts and require the **same active Colab runtime** (not independently restartable). Install packages listed in `requirements.txt` if necessary.
+## 1. Veri Kümesi
 
-**Do not execute the final test scoring cell until the unlabeled predictions, final configuration and code have been committed to GitHub in a separate commit.** The test metrics and figures in this package were generated from the supplied run. The original commit chronology must be checked against the GitHub history; adding these files now cannot retroactively prove the lock.
+Projede UCI Machine Learning Repository'de bulunan **Bank Marketing** veri kümesinin `bank-additional.csv` dosyası kullanılmıştır.
 
-## Method
-80/20 stratified split; 3 outer folds, 3 inner folds; 6 predefined manual and 6 random candidates (2 per optimizer); PyTorch MLP with BCEWithLogitsLoss, early stopping and optional ReduceLROnPlateau; fold-local preprocessing. Test predictions locked for three fixed seeds. Independent test is evaluated only after lock.
+- **Gözlem sayısı:** 4.119
+- **Hedef değişken:** Vadeli mevduat aboneliği
+- **Çıkarılan değişken:** `duration`
 
-## Structure
-- `configs/`: fixed candidate settings
-- `results/`: split, fold-level results, training logs, locked predictions, metrics
-- `figures/`: generated plots
-- `report.pdf`: Turkish report **draft requiring review**
-- `requirements.txt`: required libraries (unpinned; actual versions recorded in `results/environment.json`)
+`duration` değişkeni, tahmin yapılacağı anda bilinmeyeceği için veri sızıntısını önlemek amacıyla modelden çıkarılmıştır.
 
-## Reproducibility and limitations
-- Compare `results/environment.json` with your runtime; library version changes can affect outputs.
-- The dataset has no person identifier; random split does not prove customer-independent or temporal generalization.
-- Do not select a model based on the independent test performance.
-- `report.pdf` is a draft; inspect all tables and cross-references before submitting.
+**Veri kaynağı:** https://archive.ics.uci.edu/dataset/222/bank+marketing  
+**DOI:** 10.24432/C5K306
 
-## Sources
-- Moro, Rita, Cortez (2014), Bank Marketing, UCI, DOI 10.24432/C5K306.
-- scikit-learn: https://scikit-learn.org/stable/
-- PyTorch: https://pytorch.org/docs/stable/
+## 2. Projenin Çalıştırılması
+
+Projenin Google Colab ortamında çalıştırılması önerilmektedir.
+
+1. `MLP_Midterm_14928_Colab.ipynb` dosyasını Google Colab üzerinden açın.
+2. Gerekli kütüphaneleri `requirements.txt` dosyasına göre yükleyin.
+3. Notebook içerisindeki kod hücrelerini sırasıyla çalıştırın.
+4. Oluşturulan sonuçları `results/`, grafikleri ise `figures/` klasöründen inceleyin.
+
+Projede ayrıca üç ayrı notebook bulunmaktadır:
+
+- `01_eda.ipynb` — Keşifsel veri analizi
+- `02_nested_cv.ipynb` — İç içe çapraz doğrulama ve hiperparametre araması
+- `03_final_test.ipynb` — Nihai model ve test değerlendirmesi
+
+Bu üç notebook, ortak değişkenler kullandıkları için aynı aktif Colab oturumunda sırasıyla çalıştırılmalıdır. Bağımsız olarak yeniden başlatılıp çalıştırılmak üzere hazırlanmamıştır.
+
+**Önemli:** Nihai test sonuçları hesaplanmadan önce, test etiketlerini içermeyen tahminlerin, son model yapılandırmasının ve kodun GitHub'a ayrı bir commit ile kaydedilmesi gerekir. Bu projedeki test sonuçları mevcut deney çalışmasından elde edilmiştir. Tahminlerin kilitlenme sırası GitHub commit geçmişinden kontrol edilmelidir.
+
+## 3. Kullanılan Yöntemler
+
+Çalışmada aşağıdaki yöntemler uygulanmıştır:
+
+- Verilerin %80 geliştirme ve %20 bağımsız test kümesi olarak tabakalı biçimde ayrılması
+- 3 dış kat ve 3 iç kat ile Nested Cross-Validation uygulanması
+- Altı manuel ve altı rastgele hiperparametre adayının karşılaştırılması
+- PyTorch kullanılarak MLP modelinin oluşturulması
+- `BCEWithLogitsLoss` kayıp fonksiyonunun kullanılması
+- Early Stopping ve isteğe bağlı `ReduceLROnPlateau` uygulanması
+- Veri ön işleme adımlarının yalnızca ilgili eğitim katında öğrenilmesi
+- Üç farklı sabit seed ile nihai model sonuçlarının incelenmesi
+
+Bağımsız test kümesi, model seçiminde kullanılmamış ve kilitli tahminlerin kaydedilmesinden sonra değerlendirilmiştir.
+
+## 4. Proje Dosya Yapısı
+
+| Dosya / Klasör | Açıklama |
+|---|---|
+| `MLP_Midterm_14928_Colab.ipynb` | Projenin ana notebook dosyası |
+| `01_eda.ipynb` | Keşifsel veri analizi |
+| `02_nested_cv.ipynb` | Nested CV ve hiperparametre araması |
+| `03_final_test.ipynb` | Nihai model ve test işlemleri |
+| `configs/` | Hiperparametre yapılandırmaları |
+| `results/` | Veri ayrımları, deney sonuçları, eğitim kayıtları ve tahmin dosyaları |
+| `figures/` | Grafikler ve görselleştirmeler |
+| `report.pdf` | Projenin Türkçe teknik raporu |
+| `requirements.txt` | Kullanılan Python kütüphaneleri |
+
+## 5. Tekrarlanabilirlik ve Sınırlılıklar
+
+Deneylerin tekrarlanabilmesi için kullanılan kütüphane sürümleri `results/environment.json` dosyasından kontrol edilebilir. Farklı kütüphane sürümleri sonuçlarda küçük değişikliklere neden olabilir.
+
+Çalışmanın bazı sınırlılıkları bulunmaktadır:
+
+- Veri kümesinde müşteri kimliği bulunmadığından, rastgele veri ayrımı müşteri bazında bağımsızlığı veya zamansal genellemeyi garanti etmez.
+- Veri kümesindeki sınıf dengesizliği, pozitif sınıfın tahmin edilmesini zorlaştırmaktadır.
+- Bağımsız test sonuçlarına göre model veya hiperparametre seçimi yapılmamalıdır.
+- Nested CV ve farklı seed sonuçları, model performansının daha kapsamlı değerlendirilmesi amacıyla kullanılmıştır.
+
+## 6. Teknik Rapor
+
+Çalışmanın veri analizi, model mimarisi, hiperparametre karşılaştırmaları, performans metrikleri, grafikler ve sonuç değerlendirmeleri `report.pdf` dosyasında sunulmuştur.
+
+## 7. Kaynaklar
+
+1. Moro, S., Rita, P. ve Cortez, P. (2014). *Bank Marketing*. UCI Machine Learning Repository. DOI: 10.24432/C5K306
+2. scikit-learn Documentation: https://scikit-learn.org/stable/
+3. PyTorch Documentation: https://pytorch.org/docs/stable/
